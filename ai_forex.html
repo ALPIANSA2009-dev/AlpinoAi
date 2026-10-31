@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Forex Sniper Web</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid #333;
+        }
+        h1 {
+            color: #00ffcc;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        p.subtitle {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        .btn-scan {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .btn-scan:hover {
+            background-color: #0056b3;
+        }
+        .btn-scan:active {
+            transform: scale(0.95);
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            display: none; /* Sembunyikan awalnya */
+        }
+        .signal {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .buy { color: #00ff00; }
+        .sell { color: #ff3333; }
+        .detail {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .detail span {
+            color: #00ffcc;
+            font-weight: bold;
+        }
+        .loading {
+            color: #ffcc00;
+            display: none;
+            margin-top: 15px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🤖 AI Forex Sniper</h1>
+        <p class="subtitle">Sistem Analisis Teknikal Otomatis (Demo UI)</p>
+
+        <button class="btn-scan" id="scanBtn" onclick="analisaPasar()">SCAN MARKET</button>
+
+        <div class="loading" id="loadingText">Menganalisis indikator (RSI, MACD, ADX)...</div>
+
+        <div class="result-box" id="resultBox">
+            <div class="signal" id="signalText">-</div>
+            <div class="detail">Entry: <span id="entryVal">-</span></div>
+            <div class="detail">Take Profit (TP): <span id="tpVal">-</span></div>
+            <div class="detail">Stop Loss (SL): <span id="slVal">-</span></div>
+            <p style="font-size: 10px; color: #666; margin-top: 15px;">*Simulasi data. Untuk live trading butuh koneksi API Broker.</p>
+        </div>
+    </div>
+
+    <script>
+        function analisaPasar() {
+            // Sembunyikan hasil sebelumnya & tampilkan loading
+            document.getElementById('resultBox').style.display = 'none';
+            document.getElementById('loadingText').style.display = 'block';
+            document.getElementById('scanBtn').disabled = true;
+            document.getElementById('scanBtn').innerText = "MENGANALISIS...";
+
+            // Simulasi delay AI berpikir selama 2 detik
+            setTimeout(() => {
+                // LOGIKA SIMULASI AI (Angka acak untuk demo)
+                // Di versi nyata, ini diganti dengan fetch() ke API Binance/MetaTrader
+                const isBuy = Math.random() > 0.5;
+                const basePrice = 77265.00; // Sesuai gambar Anda
+                
+                let signal, entry, tp, sl;
+
+                if (isBuy) {
+                    signal = "BUY (LONG)";
+                    entry = basePrice + 5;
+                    tp = entry + 50;
+                    sl = entry - 30;
+                } else {
+                    signal = "SELL (SHORT)";
+                    entry = basePrice - 5;
+                    tp = entry - 50;
+                    sl = entry + 30;
+                }
+
+                // Update Tampilan Web
+                const signalEl = document.getElementById('signalText');
+                signalEl.innerText = signal;
+                signalEl.className = isBuy ? 'signal buy' : 'signal sell';
+
+                document.getElementById('entryVal').innerText = entry.toFixed(2);
+                document.getElementById('tpVal').innerText = tp.toFixed(2);
+                document.getElementById('slVal').innerText = sl.toFixed(2);
+
+                // Sembunyikan loading, tampilkan hasil
+                document.getElementById('loadingText').style.display = 'none';
+                document.getElementById('resultBox').style.display = 'block';
+                
+                // Reset tombol
+                document.getElementById('scanBtn').disabled = false;
+                document.getElementById('scanBtn').innerText = "SCAN ULANG";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
